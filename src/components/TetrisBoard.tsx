@@ -30,7 +30,7 @@ const TetrisBoard: React.FC<TetrisBoardProps> = ({
   const [score, setScore] = useState(0)
   const [level, setLevel] = useState(1)
   const [fallSpeed, setFallSpeed] = useState(INITIAL_FALL_SPEED)
-  const fallIntervalRef = useRef<NodeJS.Timeout | null>(null)
+  const fallIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   // 新しいブロックを生成
   const generateNewBlock = useCallback((): TetrisBlock => {
