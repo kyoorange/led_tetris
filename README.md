@@ -1,21 +1,39 @@
-# React + TypeScript + Vite
+# LEDテトリス
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## アプリの特徴
+世界中で、どんな母国語の人でも、脳死で遊べるやさしいゲームです。
 
-While this project uses React, Vite supports many popular JS frameworks. [See all the supported frameworks](https://vitejs.dev/guide/#scaffolding-your-first-vite-project).
+## 技術スタック
+- Next.js（Typescript）
+- React
 
-## Deploy Your Own
+## コンセプト
+テトリスのブロックは施設用の照明器具をモチーフにしています。デザインは順次拡充します。まずはカラフルな四角形を使って実装しておきます。
 
-Deploy your own Vite project with Vercel.
+**ブロックのデザイン**
+- ベースLEDライト
+- ダウンライト
+- スクエアライト
+- 工場用高天井ライト
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/examples/tree/main/framework-boilerplates/vite-react&template=vite-react)
+ブロックのアスペクト比は以下のバリエーションです。
 
-_Live Example: https://vite-react-example.vercel.app_
+**ブロックのアスペクト比**
+- 1:1 (ベースLEDライト、スクエアライト、T-block、Z-block)
+- 1:2 (ダウンライト、L-block)
+- 1:4 (I-block)
+- 1:8 (工場用高天井ライト)
 
-### Deploying From Your Terminal
+## 遊び方
+- OAuth：当初は未実装
+- ニックネームを登録
+- [GO]押下から数秒でブロックがひとつづつ落ちてくる
+- 一つのブロックが着地するまで次は落ちてこない
+- 落下スピードは非常にゆっくり
+- 落下中のオブジェクトはタップで回転させることができる
 
-You can deploy your new Vite project with a single command from your terminal using [Vercel CLI](https://vercel.com/download):
-
-```shell
-$ vercel
+## 開発コマンド
 ```
+npm run dev
+```
+

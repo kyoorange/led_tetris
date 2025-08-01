@@ -1,0 +1,266 @@
+.game-info {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  min-width: 300px;
+  max-width: 350px;
+}
+
+.player-info h3 {
+  color: #333333;
+  margin: 0 0 20px 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-align: center;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #333333;
+}
+
+.game-stats {
+  margin-bottom: 25px;
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 12px 16px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.stat-item label {
+  font-weight: 600;
+  color: #555555;
+  font-size: 0.9rem;
+}
+
+.stat-item .score {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #333333;
+}
+
+.stat-item .level {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #333333;
+}
+
+.game-state {
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.game-state.waiting {
+  background: rgba(255, 193, 7, 0.2);
+  color: #856404;
+  border-color: rgba(255, 193, 7, 0.3);
+}
+
+.game-state.playing {
+  background: rgba(40, 167, 69, 0.2);
+  color: #155724;
+  border-color: rgba(40, 167, 69, 0.3);
+}
+
+.game-state.paused {
+  background: rgba(255, 193, 7, 0.2);
+  color: #856404;
+  border-color: rgba(255, 193, 7, 0.3);
+}
+
+.game-state.gameOver {
+  background: rgba(220, 53, 69, 0.2);
+  color: #721c24;
+  border-color: rgba(220, 53, 69, 0.3);
+}
+
+/* ゲームオーバー画面 */
+.game-over {
+  text-align: center;
+  margin: 20px 0;
+  padding: 25px;
+  background: rgba(220, 53, 69, 0.1);
+  border: 1px solid rgba(220, 53, 69, 0.2);
+  border-radius: 20px;
+  color: #333333;
+}
+
+.game-over h2 {
+  margin: 0 0 15px 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #721c24;
+}
+
+.game-over p {
+  margin: 8px 0;
+  font-size: 1.1rem;
+  color: #333333;
+}
+
+.reset-button {
+  background: #ffffff;
+  color: #333333;
+  border: none;
+  padding: 14px 30px;
+  border-radius: 20px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.reset-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  background: #f8f9fa;
+}
+
+/* 遊び方説明 */
+.instructions {
+  margin: 25px 0;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #333333;
+}
+
+.instructions h4 {
+  color: #333333;
+  margin: 0 0 12px 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.instructions ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.instructions li {
+  color: #555555;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* ブロック情報 */
+.block-info {
+  margin-top: 25px;
+}
+
+.block-info h4 {
+  color: #333333;
+  margin: 0 0 15px 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.block-types {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.block-type {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px 16px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.block-type:hover {
+  background: rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.block-preview {
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.block-preview:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* ベースLEDライト (1:6) - 細長い */
+.block-preview.base-led {
+  width: 12px;
+  height: 24px;
+  background: #333333;
+}
+
+/* ダウンライト (1:2) - 小さめ */
+.block-preview.downlight {
+  width: 16px;
+  height: 16px;
+  background: #333333;
+}
+
+/* スクエアライト (4:4) - 大きめ */
+.block-preview.square-light {
+  width: 28px;
+  height: 28px;
+  background: #333333;
+}
+
+/* 工場用高天井ライト (2:2) - 中サイズ */
+.block-preview.factory-light {
+  width: 20px;
+  height: 20px;
+  background: #333333;
+}
+
+.block-type span {
+  font-size: 0.9rem;
+  color: #333333;
+  font-weight: 500;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+  .game-info {
+    min-width: 300px;
+    max-width: 340px;
+    padding: 25px;
+  }
+  
+  .stat-item {
+    padding: 10px 14px;
+  }
+  
+  .stat-item .score {
+    font-size: 1.1rem;
+  }
+  
+  .instructions li {
+    font-size: 0.85rem;
+  }
+  
+  .block-type span {
+    font-size: 0.85rem;
+  }
+  
+  .block-type {
+    padding: 10px 14px;
+  }
+} 
