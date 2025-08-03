@@ -1,8 +1,14 @@
 .tetris-board {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 20px;
+  justify-content: center;
+  gap: 30px;
+  height: 100vh;
+  width: 100vw;
+  min-height: 100vh;
+  min-width: 100vw;
+  box-sizing: border-box;
 }
 
 .board-container {
@@ -16,6 +22,7 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   position: relative;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .board-container::before {
@@ -31,6 +38,11 @@
   opacity: 0.3;
 }
 
+.board-grid {
+  position: relative;
+  display: inline-block;
+}
+
 .board-row {
   display: flex;
   height: 25px;
@@ -42,36 +54,20 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-sizing: border-box;
   transition: all 0.1s ease;
+  background-color: transparent; /* 背景を透明に */
+  position: relative; /* 子要素の絶対配置のため */
 }
 
 .board-cell:hover {
   border-color: rgba(255, 255, 255, 0.3);
 }
 
-/* ブロックタイプ別のスタイル */
-.block-base-led {
-  background: #ffffff !important;
-  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.3);
-  border-radius: 4px;
+/* ブロックオーバーレイのスタイル */
+.current-block-overlay,
+.fixed-block-overlay {
+  pointer-events: none;
 }
 
-.block-downlight {
-  background: #ffffff !important;
-  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.3);
-  border-radius: 4px;
-}
-
-.block-square-light {
-  background: #ffffff !important;
-  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.3);
-  border-radius: 4px;
-}
-
-.block-factory-light {
-  background: #ffffff !important;
-  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.3);
-  border-radius: 4px;
-}
 
 /* ゲームコントロール */
 .game-controls {
@@ -80,11 +76,12 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 20px;
   border-radius: 16px;
-  box-shadow: 
+  box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   text-align: center;
-  max-width: 300px;
+  width: 200px;
+  margin-top: 20px;
 }
 
 .game-controls p {
@@ -129,17 +126,146 @@
 
 /* レスポンシブデザイン */
 @media (max-width: 768px) {
+  .tetris-board {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    height: 100vh;
+    width: 100vw;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
   .board-container {
     transform: scale(0.8);
     transform-origin: top center;
+    max-width: 90vw;
+    max-height: 60vh;
+  }
+  
+  .mobile-controls {
+    flex-direction: row;
+    width: auto;
+    margin-left: 0;
+    margin-top: 20px;
+    gap: 15px;
   }
   
   .game-controls {
-    max-width: 250px;
+    width: 100%;
+    max-width: 300px;
     padding: 15px;
   }
   
   .game-controls p {
     font-size: 0.8rem;
+  }
+}
+
+/* モバイル操作ボタン */
+.mobile-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 80px;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  margin-left: 20px;
+}
+
+.control-button {
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  color: #ffffff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.control-button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 6px 16px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.control-button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.control-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.rotate-btn {
+  background: rgba(255, 193, 7, 0.2);
+}
+
+.rotate-btn:hover:not(:disabled) {
+  background: rgba(255, 193, 7, 0.3);
+}
+
+.left-btn, .right-btn {
+  background: rgba(33, 150, 243, 0.2);
+}
+
+.left-btn:hover:not(:disabled), .right-btn:hover:not(:disabled) {
+  background: rgba(33, 150, 243, 0.3);
+}
+
+.down-btn {
+  background: rgba(76, 175, 80, 0.2);
+}
+
+.down-btn:hover:not(:disabled) {
+  background: rgba(76, 175, 80, 0.3);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .tetris-board {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    height: 100vh;
+    width: 100vw;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .mobile-controls {
+    flex-direction: row;
+    width: auto;
+    margin-left: 0;
+    margin-top: 20px;
+    gap: 15px;
+  }
+  
+  .control-button {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
   }
 } 

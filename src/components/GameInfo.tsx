@@ -1,5 +1,6 @@
 import React from 'react'
 import { GameState } from '../types/game'
+import { tetrisBlocks } from '../data/tetrisBlocks'
 import './GameInfo.css'
 
 interface GameInfoProps {
@@ -7,15 +8,13 @@ interface GameInfoProps {
   level: number
   gameState: GameState
   nickname: string
-  onReset: () => void
 }
 
 const GameInfo: React.FC<GameInfoProps> = ({
   score,
   level,
   gameState,
-  nickname,
-  onReset
+  nickname
 }) => {
   const getGameStateText = () => {
     switch (gameState) {
@@ -30,6 +29,44 @@ const GameInfo: React.FC<GameInfoProps> = ({
       default:
         return ''
     }
+  }
+
+  const renderBlockPreview = (blockType: string) => {
+    const block = tetrisBlocks[blockType]
+    if (!block) return null
+
+    const shape = block.shape
+    const maxWidth = Math.max(...shape.map(row => row.length))
+    const maxHeight = shape.length
+
+    return (
+      <div 
+        className="block-preview"
+        style={{
+          display: 'grid',
+          gridTemplateColumns: `repeat(${maxWidth}, 8px)`,
+          gridTemplateRows: `repeat(${maxHeight}, 8px)`,
+          gap: '1px',
+          width: `${maxWidth * 8 + (maxWidth - 1)}px`,
+          height: `${maxHeight * 8 + (maxHeight - 1)}px`
+        }}
+      >
+        {shape.map((row, y) =>
+          row.map((cell, x) => (
+            <div
+              key={`${x}-${y}`}
+              className="block-cell"
+              style={{
+                backgroundColor: cell ? block.color : 'transparent',
+                width: '8px',
+                height: '8px',
+                borderRadius: '1px'
+              }}
+            />
+          ))
+        )}
+      </div>
+    )
   }
 
   return (
@@ -55,51 +92,42 @@ const GameInfo: React.FC<GameInfoProps> = ({
         </div>
       </div>
       
-      {gameState === 'gameOver' && (
-        <div className="game-over">
-          <h2>ゲームオーバー</h2>
-          <p>最終スコア: {score.toLocaleString()}</p>
-          <p>レベル: {level}</p>
-          <button onClick={onReset} className="reset-button">
-            もう一度プレイ
-          </button>
-        </div>
-      )}
-      
-      <div className="instructions">
-        <h4>遊び方</h4>
-        <ul>
-          <li>← → キーでブロックを移動</li>
-          <li>↑ キーまたはスペースでブロックを回転</li>
-          <li>↓ キーで高速落下</li>
-          <li>ラインを揃えるとスコアアップ</li>
-          <li>ブロックが天井に到達するとゲームオーバー</li>
-        </ul>
-      </div>
-      
       <div className="block-info">
         <h4>ブロックの種類</h4>
         <div className="block-types">
-          <div className="block-type">
-            <div className="block-preview base-led"></div>
-            <span>ベースLEDライト (1:6)</span>
-          </div>
-          <div className="block-type">
-            <div className="block-preview downlight"></div>
-            <span>ダウンライト (1:2)</span>
-          </div>
-          <div className="block-type">
-            <div className="block-preview square-light"></div>
-            <span>スクエアライト (4:4)</span>
-          </div>
-          <div className="block-type">
-            <div className="block-preview factory-light"></div>
-            <span>工場用高天井ライト (2:2)</span>
-          </div>
+          {Object.entries(tetrisBlocks).map(([key, block]) => (
+            <div key={key} className="block-type">
+              {renderBlockPreview(key)}
+              <div className="block-details">
+                <span className="block-name">{getBlockDisplayName(key)}</span>
+                <span className="block-ratio">{block.aspectRatio}</span>
+              </div>
+            </div>
+          ))}
         </div>
+      </div>
+      
+      <div className="instructions">
+        <h4>📱 スマホ操作方法</h4>
+        <ul>
+          <li>🔄 <strong>回転ボタン</strong>：ブロックを回転</li>
+          <li>⬅️➡️ <strong>左右ボタン</strong>：ブロックを移動</li>
+          <li>⬇️ <strong>下ボタン</strong>：高速落下</li>
+          <li>📱 <strong>ブロックタップ</strong>：直接回転</li>
+        </ul>
       </div>
     </div>
   )
+}
+
+const getBlockDisplayName = (blockType: string): string => {
+  const names: Record<string, string> = {
+    'base-led': 'ベースLEDライト',
+    'downlight': 'ダウンライト',
+    'square-light': 'スクエアライト',
+    'factory-light': '工場用高天井ライト'
+  }
+  return names[blockType] || blockType
 }
 
 export default GameInfo
